@@ -14,18 +14,9 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-# Ensure Matplotlib uses a writable temporary directory and non-interactive backend
-if "MPLCONFIGDIR" not in os.environ:
-    import tempfile
-    os.environ["MPLCONFIGDIR"] = os.path.join(tempfile.gettempdir(), "matplotlib_cache")
-
 import joblib
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import seaborn as sns
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -375,6 +366,15 @@ def save_evaluation_artifacts(
     Save evaluation metrics, comparison CSV, text report, class distribution chart,
     and confusion matrix visualization into results/.
     """
+    if "MPLCONFIGDIR" not in os.environ:
+        import tempfile
+        os.environ["MPLCONFIGDIR"] = os.path.join(tempfile.gettempdir(), "matplotlib_cache")
+
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
     results_dir.mkdir(parents=True, exist_ok=True)
 
     # 1. Save model comparison table as CSV
@@ -505,8 +505,8 @@ def save_model(
     """Save the trained classifier and fitted TF-IDF vectorizer using joblib."""
     model_path.parent.mkdir(parents=True, exist_ok=True)
     vectorizer_path.parent.mkdir(parents=True, exist_ok=True)
-    joblib.dump(model, model_path)
-    joblib.dump(vectorizer, vectorizer_path)
+    joblib.dump(model, model_path, compress=3, protocol=4)
+    joblib.dump(vectorizer, vectorizer_path, compress=3, protocol=4)
     print(f"[INFO] Saved model to: {model_path}")
     print(f"[INFO] Saved TF-IDF vectorizer to: {vectorizer_path}")
 

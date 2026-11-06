@@ -159,7 +159,9 @@ HARD LEVEL/
     ├── dataset/
     │   └── README.md
     ├── models/
-    │   └── .gitkeep
+    │   ├── .gitkeep
+    │   ├── fake_news_model.pkl
+    │   └── tfidf_vectorizer.pkl
     └── results/
         ├── .gitkeep
         ├── class_distribution.png
@@ -216,6 +218,26 @@ python fake_news_detector.py --predict "The Senate passed the bipartisan infrast
 ```powershell
 streamlit run app.py
 ```
+
+## Deployment
+
+Platform:
+Streamlit Community Cloud (current free tier offering)
+
+Cost:
+Free
+
+Inference:
+Local scikit-learn model
+
+External AI APIs:
+None
+
+### Streamlit Community Cloud Configuration
+
+- Repository: `sohail12345621/Kodbud-Solution-internship`
+- Branch: `main`
+- Main file path: `HARD LEVEL/Task 2 - Fake News Detection System/app.py`
 
 ## Results
 

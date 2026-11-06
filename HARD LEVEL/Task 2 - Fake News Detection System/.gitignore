@@ -6,6 +6,5 @@ env/
 .idea/
 .vscode/
 .env
-models/*.pkl
 dataset/*.csv
 dataset/*.zip
